@@ -1,94 +1,104 @@
 package com.rosal.calculator;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-import java.text.DecimalFormat;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText number1EditText, number2EditText;
-    private TextView resultTextView;
-    private Button addButton, subtractButton, multiplyButton, divideButton;
+    private ArrayList<ListItem> items;
+    private ListView listView;
+    private EditText editText;
+    private CustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        number1EditText = findViewById(R.id.number1EditText);
-        number2EditText = findViewById(R.id.number2EditText);
-        resultTextView = findViewById(R.id.resultTextView);
-        addButton = findViewById(R.id.addButton);
-        subtractButton = findViewById(R.id.subtractButton);
-        multiplyButton = findViewById(R.id.multiplyButton);
-        divideButton = findViewById(R.id.divideButton);
+        // Initialize the views
+        listView = findViewById(R.id.listView);
+        editText = findViewById(R.id.editText);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculate('+');
-            }
-        });
+        // Initialize the item list
+        items = new ArrayList<>();
+        adapter = new CustomAdapter();
+        listView.setAdapter(adapter);
 
-        subtractButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculate('-');
+        // Add new item when user enters text
+        editText.setOnEditorActionListener((v, actionId, event) -> {
+            String text = editText.getText().toString();
+            if (!text.isEmpty()) {
+                // Add a new item with a default image and unchecked checkbox
+                items.add(new ListItem(text, false, R.drawable.catcheeks));
+                adapter.notifyDataSetChanged();
+                editText.setText(""); // Clear input field
             }
-        });
-
-        multiplyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculate('*');
-            }
-        });
-
-        divideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculate('/');
-            }
+            return true;
         });
     }
 
-    private void calculate(char operator) {
-        String num1Str = number1EditText.getText().toString();
-        String num2Str = number2EditText.getText().toString();
+    // ListItem class representing each list item
+    public class ListItem {
+        String text;
+        boolean checked;
+        int imageResource;
 
-        if (!num1Str.isEmpty() && !num2Str.isEmpty()) {
-            double num1 = Double.parseDouble(num1Str);
-            double num2 = Double.parseDouble(num2Str);
-            double result = 0;
+        public ListItem(String text, boolean checked, int imageResource) {
+            this.text = text;
+            this.checked = checked;
+            this.imageResource = imageResource;
+        }
+    }
 
-            switch (operator) {
-                case '+':
-                    result = num1 + num2;
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    break;
-                case '/':
-                    if (num2 != 0) {
-                        result = num1 / num2;
-                    } else {
-                        resultTextView.setText("Error");
-                        return;
-                    }
-                    break;
+    // Custom adapter class for the ListView
+    private class CustomAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return items.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return items.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, android.view.ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.list_item, parent, false);
             }
 
-            DecimalFormat df = new DecimalFormat("0.00");
-            resultTextView.setText(df.format(result));
-        } else {
-            resultTextView.setText("0.00");
+            // Get the list item for this position
+            ListItem item = items.get(position);
+
+            // Set up the checkbox, text, and image
+            CheckBox checkBox = convertView.findViewById(R.id.checkBox);
+            checkBox.setChecked(item.checked);
+            checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> item.checked = isChecked);
+
+            TextView textView = convertView.findViewById(R.id.textView);
+            textView.setText(item.text);
+
+            ImageView imageView = convertView.findViewById(R.id.imageView);
+            imageView.setImageResource(item.imageResource);
+
+            return convertView;
         }
     }
 }
