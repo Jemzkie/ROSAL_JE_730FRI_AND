@@ -1,4 +1,4 @@
-package com.rosal.calculator;
+package com.rosal.rosal730friand;
 
 import org.junit.Test;
 

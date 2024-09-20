@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.rosal.calculator"
+    namespace = "com.rosal.rosal730friand"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.rosal.calculator"
+        applicationId = "com.rosal.rosal730friand"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
