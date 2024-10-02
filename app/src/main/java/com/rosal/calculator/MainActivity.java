@@ -1,9 +1,10 @@
-package com.example.bottomnavigationapp;
+package com.rosal.calculator;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.rosal.calculator.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,19 +17,17 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
-            switch (item.getItemId()) {
-                case R.id.navigation_calculator:
-                    selectedFragment = new CalculatorFragment();
-                    break;
-                case R.id.navigation_list:
-                    selectedFragment = new ListFragment();
-                    break;
-                case R.id.navigation_profile:
-                    selectedFragment = new ProfileFragment();
-                    break;
+            if (item.getItemId() == R.id.navigation_calculator) {
+                selectedFragment = new CalculatorFragment();
+            } else if (item.getItemId() == R.id.navigation_list) {
+                selectedFragment = new ListFragment();
+            } else if (item.getItemId() == R.id.navigation_profile) {
+                selectedFragment = new ProfileFragment();
             }
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedFragment).commit();
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, selectedFragment).commit();
+            }
             return true;
         });
 
