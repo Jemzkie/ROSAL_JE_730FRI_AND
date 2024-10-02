@@ -1,7 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Calculator" parent="Theme.Material3.DayNight.NoActionBar">
+    <!-- Base application theme with ActionBar. -->
+    <style name="Base.Theme.Calculator" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
+        <!-- You can add your color definitions if needed -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 

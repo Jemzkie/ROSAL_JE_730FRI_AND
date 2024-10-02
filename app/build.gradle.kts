@@ -33,6 +33,8 @@ android {
 
 dependencies {
 
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation ("androidx.fragment:fragment:1.5.6")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

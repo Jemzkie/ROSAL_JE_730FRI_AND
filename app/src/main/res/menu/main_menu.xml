@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- First Menu Item: Go to another fragment -->
+    <item
+        android:id="@+id/menu_fragment"
+        android:title="Open Fragment"
+        android:icon="@drawable/menu"
+        app:showAsAction="ifRoom" />
+
+    <!-- Second Menu Item: Open DialogFragment -->
+    <item
+        android:id="@+id/menu_dialog"
+        android:title="Open Dialog"
+        android:icon="@drawable/dialog"
+        app:showAsAction="ifRoom" />
+
+    <!-- Third Menu Item: Submenu with Exit option -->
+    <item
+        android:id="@+id/menu_more"
+        android:title="More"
+        android:icon="@drawable/more"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menu_exit"
+                android:title="Exit App" />
+        </menu>
+    </item>
+</menu>
